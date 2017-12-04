@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
   shows: state.shows
 });
 
-const mapPropsToDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   getShows: dispatch(getShows)
 });
-export default connect(mapStateToProps, mapPropsToDispatch)(ShowsList);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowsList);
