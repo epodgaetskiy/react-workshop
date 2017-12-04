@@ -1,5 +1,5 @@
 import React from 'react';
-import Shows from './Shows/ShowsList';
+import Shows from '../components/Shows/ShowsList';
 
 export default class App extends React.Component {
   render() {
