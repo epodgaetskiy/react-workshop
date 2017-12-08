@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store/configureStore';
-
+//material ui roboto font
+import 'typeface-roboto';
 const store = configureStore();
 
 ReactDOM.render(

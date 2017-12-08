@@ -1,8 +1,8 @@
 import React from 'react';
-import Shows from '../components/Shows/ShowsList';
+import Events from '../components/Events/EventsList';
 
 export default class App extends React.Component {
   render() {
-    return <Shows />;
+    return <Events />;
   }
 }
