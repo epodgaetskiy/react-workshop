@@ -65,16 +65,22 @@ class EventsList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.filters.query !== this.props.filters.query) {
-    //   const newParams = {
-    //     ...params,
-    //   };
-    //   this.getEvents(newParams);
-    // }
+    if (nextProps.filters !== this.props.filters) {
+      const newParams = {
+        ...params,
+        filters: JSON.stringify({
+          trainingTypes: {
+            id: nextProps.filters.type !== "0" ? nextProps.filters.type : { neq: 0 }
+          },
+          location: { city: { id: { in: ['1', 18] } } },
+          startAt: { gte: timeNow },
+        })
+      };
+      this.getEvents(newParams);
+    }
   }
   render() {
     const { isFetching, events, name } = this.state;
-    console.log(this.props.filters)
     return isFetching ? (
       <CircularProgress />
     ) : (
