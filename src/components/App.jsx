@@ -7,6 +7,22 @@ import Events from '../components/Events/EventsList';
 import Filters from '../components/Filters/Filters';
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      filters: {
+        query: ''
+      }
+    };
+  }
+
+  updateFilters = filters => {
+    this.setState({
+      filters: { ...filters }
+    });
+  };
+
   render() {
     return (
       <div>
@@ -18,10 +34,10 @@ export default class App extends React.Component {
         </AppBar>
         <Grid container spacing={24}>
           <Grid item xs={3}>
-            <Filters />
+            <Filters updateFilters={this.updateFilters} />
           </Grid>
           <Grid item xs={9}>
-            <Events />
+            <Events filters={this.state.filters} />
           </Grid>
         </Grid>
       </div>

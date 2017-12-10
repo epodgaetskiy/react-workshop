@@ -60,6 +60,8 @@ class EventsList extends React.Component {
         });
       });
   }
+
+  componentWillReceiveProps(nextProps) {}
   render() {
     const { isFetching, events, name } = this.state;
     return isFetching ? (
