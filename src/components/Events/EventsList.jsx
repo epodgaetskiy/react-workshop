@@ -17,9 +17,15 @@ class EventsList extends React.Component {
 
     this.state = {
       events: [],
-      isFetching: false
+      isFetching: false,
+      name: ''
     };
   }
+
+  state = {
+    events: [],
+    isFetching: false
+  };
 
   componentDidMount() {
     const params = {
@@ -38,24 +44,51 @@ class EventsList extends React.Component {
       limit: 9
     };
 
+    this.setState({
+      isFetching: true
+    });
     fetch(
       `https://api.gdesport.info/api/search/result${qs.stringify(params, {
         addQueryPrefix: true
       })}`
-    );
+    )
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          isFetching: false,
+          events: data.items
+        });
+      });
   }
   render() {
-    const { isFetching, events } = this.state;
-    return !isFetching ? (
+    const { isFetching, events, name } = this.state;
+    return isFetching ? (
+      <CircularProgress />
+    ) : (
       <Grid container spacing={24}>
         {events.length > 0
           ? events.map(event => <EventItem key={event.id} event={event} />)
           : 'Нет событий'}
       </Grid>
-    ) : (
-      <CircularProgress />
     );
   }
 }
 
 export default EventsList;
+
+// addEvent = newNote => {
+//   this.setState(prevState => {
+//     return {
+//       user: {
+//         ...prevState.users,
+//         name: 'evgeniy'
+//       }
+//     };
+//   });
+//
+//   const newUser = { ...this.state.user };
+//   newUser.name = 'evgeniy';
+//   this.setState({
+//     user: newUser
+//   });
+// };
