@@ -19,8 +19,22 @@ const styles = {
 };
 
 class Filters extends React.Component {
+  state = {
+    trainingTypes: []
+  };
+
+  componentDidMount() {
+    fetch('https://api.gdesport.info/api/trainingTypes?limit=0')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          trainingTypes: data
+        });
+      });
+  }
   render() {
     const { classes } = this.props;
+    const { trainingTypes } = this.state;
     return (
       <form className={classes.form}>
         <FormControl className={classes.formControl}>
@@ -29,9 +43,11 @@ class Filters extends React.Component {
             <MenuItem value="">
               <em>Все направления</em>
             </MenuItem>
-            <MenuItem value={10}>Танцы</MenuItem>
-            <MenuItem value={20}>Походы/туры/сборы</MenuItem>
-            <MenuItem value={30}>Прочее</MenuItem>
+            {trainingTypes.map(type => (
+              <MenuItem value={type.id} key={type.id}>
+                {type.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField
