@@ -12,7 +12,8 @@ export default class App extends React.Component {
 
     this.state = {
       filters: {
-        query: ''
+        query: '',
+        type: 0
       }
     };
   }

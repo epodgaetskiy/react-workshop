@@ -11,14 +11,29 @@ const timeNow = encodeURIComponent(
     .format()
 );
 
+const params = {
+  type: 'events',
+  direction: 'asc',
+  query: '',
+  sorts: JSON.stringify({
+    startAt: 'asc'
+  }),
+  filters: JSON.stringify({
+    trainingTypes: { id: { neq: 0 } },
+    location: { city: { id: { in: ['1', 18] } } },
+    startAt: { gte: timeNow }
+  }),
+  page: 1,
+  limit: 9
+};
+
 class EventsList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       events: [],
-      isFetching: false,
-      name: ''
+      isFetching: false
     };
   }
 
@@ -27,23 +42,7 @@ class EventsList extends React.Component {
     isFetching: false
   };
 
-  componentDidMount() {
-    const params = {
-      type: 'events',
-      direction: 'asc',
-      query: '',
-      sorts: JSON.stringify({
-        startAt: 'asc'
-      }),
-      filters: JSON.stringify({
-        trainingTypes: { id: { neq: 0 } },
-        location: { city: { id: { in: ['1', 18] } } },
-        startAt: { gte: timeNow }
-      }),
-      page: 1,
-      limit: 9
-    };
-
+  getEvents = params => {
     this.setState({
       isFetching: true
     });
@@ -59,11 +58,23 @@ class EventsList extends React.Component {
           events: data.items
         });
       });
+  };
+
+  componentDidMount() {
+    this.getEvents(params);
   }
 
-  componentWillReceiveProps(nextProps) {}
+  componentWillReceiveProps(nextProps) {
+    // if (nextProps.filters.query !== this.props.filters.query) {
+    //   const newParams = {
+    //     ...params,
+    //   };
+    //   this.getEvents(newParams);
+    // }
+  }
   render() {
     const { isFetching, events, name } = this.state;
+    console.log(this.props.filters)
     return isFetching ? (
       <CircularProgress />
     ) : (

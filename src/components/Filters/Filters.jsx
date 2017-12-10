@@ -43,7 +43,8 @@ class Filters extends React.Component {
 
   handleClick = () => {
     const filters = {
-      query: this.state.query
+      query: this.state.query,
+      type: this.state.type
     };
     this.props.updateFilters(filters);
   };
